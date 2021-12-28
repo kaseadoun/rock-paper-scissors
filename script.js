@@ -1,59 +1,55 @@
-function game() {
-    for (i = 1; i <= 5; i++){
-        console.log(`Round: ${i}`);
-        play(playerSelection, computerSelection);
-        computerPlay();
-        playerPlay();
-    }
-}
+const playerChoice = document.querySelectorAll('.playerChoice');
+const playerPoints = document.querySelector('#playerPoints');
+const computerPoints = document.querySelector('#compPoints');
+
+const displayMessage = document.querySelector("#gameOver");
+
+let playerP = 0;
+let compP = 0;
+
+let computerSelection;
+let playerSelection;
 
 function computerPlay() {
     const computerChoice = ['rock', 'paper', 'scissors'];
-    let number = Math.floor(Math.random() * 3);
-    let finalChoice = computerChoice[number];
-    console.log(`Computer's Choice: ${finalChoice}`)
-    return finalChoice;
+    computerSelection = computerChoice[Math.floor(Math.random() * 3)];
 }
 
-function playerPlay() {
-    let playerChoice = prompt("Rock, Paper, or Scissors?");
-    // while (finalChoice != 'rock' || finalChoice != 'paper' || finalChoice != 'scissors')
-    // {
-    //     finalChoice = prompt("Invalid. Rock, Paper, or Scissors?").toLowerCase();
-    // }
-    return playerChoice.toLowerCase();
+playerChoice.forEach(button => {
+    button.addEventListener('click', function () {
+        playerSelection = button.textContent.toLowerCase();
+        computerPlay();
+        playRound(playerSelection, computerSelection);
+
+        //DEBUG
+        console.log(`Player Selection: ${playerSelection}`);
+        console.log(`Computer Selection: ${computerSelection}`);
+    })
+})
+
+function gameOver() {
+    if (playerP == 5) {
+        displayMessage.textContent = "WINNER!";
+    } else {
+        displayMessage.textContent = "LOSER!";
+    }
+    playerChoice.forEach(button => button.disabled = true);
 }
 
-const computerSelection = computerPlay();
-const playerSelection = playerPlay();
-
-function play(playerSelection, computerSelection) {
-    const player = playerSelection;
-    const computer = computerSelection;
-    console.log(`Player's Choice: ${player}`);
-    if (computer === "rock") {
-        if (player === "rock") {
-            console.log("Draw!");
-        } else if (player === "paper") {
-            console.log("Win!"); 
-        } else if (player === "scissors"){
-            console.log("Lose!");
-        }
-    } else if (computer === "paper") {
-        if (player === "rock") {
-            console.log("Lose!");
-        } else if (player === "paper") {
-            console.log("Draw!"); 
-        } else if (player === "scissors") {
-            console.log("Win!");
-        }
-    } else if (computer === "scissors") {
-        if (player === "rock") {
-            console.log("Win!");
-        } else if (player === "paper") {
-            console.log("Lose!"); 
-        } else if (player === "scissors"){
-            console.log("Draw!");
+function playRound(playerSelection, computerSelection) {
+    if (playerP == 5 || compP == 5) {
+        gameOver();
+    } else {
+        if (playerSelection === computerSelection) {
+            console.log('DRAW!');
+        } else if (playerSelection === 'rock' && computerSelection === 'scissors' || playerSelection === 'paper' && computerSelection === 'rock' || playerSelection === 'scissors' && computerSelection === 'paper') {
+            console.log('YOU WIN!');
+            ++playerP;
+            playerPoints.textContent = playerP;
+        } else {
+            console.log('LOSER');
+            ++compP;
+            computerPoints.textContent = compP;
         }
     }
 }

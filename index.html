@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="ui.css">
     <title>Rock Paper Scissors!</title>
 </head>
+
 <body>
+    <main>
+        <div id="points">
+            <div id="playerPoints">0</div>
+            <div id="compPoints">0</div>
+        </div>
+        <div>
+            <button class="playerChoice" id="rock">Rock</button>
+            <button class="playerChoice" id="paper">Paper</button>
+            <button class="playerChoice" id="scissors">Scissors</button>
+        </div>
+        <h1 id="gameOver"></h1>
+    </main>
     <script src="script.js"></script>
 </body>
+
 </html>
